@@ -4,6 +4,7 @@ import android.net.Uri
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -12,6 +13,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.pantrypilot.app.data.local.OnboardingPreferences
 import com.pantrypilot.app.data.model.Ingredient
 import com.pantrypilot.app.data.model.Recipe
 import com.pantrypilot.app.ui.screens.PantryCameraScreen
@@ -22,6 +24,7 @@ import com.pantrypilot.app.ui.screens.recipe_discovery.RecipeDiscoveryScreen
 import com.pantrypilot.app.ui.screens.review_ingredients.ReviewIngredientsScreen
 import com.pantrypilot.app.ui.screens.saved_recipes.SavedRecipesScreen
 import com.pantrypilot.app.ui.screens.splash.SplashScreen
+import com.pantrypilot.app.ui.screens.welcome.WelcomeScreen
 
 @Composable
 fun PantryPilotNavHost(
@@ -30,6 +33,9 @@ fun PantryPilotNavHost(
     startDestination: String = Screen.Splash.route,
     onExitApp: () -> Unit = {}
 ) {
+    val context = LocalContext.current
+    val onboardingPreferences = remember(context) { OnboardingPreferences(context.applicationContext) }
+
     NavHost(
         navController = navController,
         startDestination = startDestination,
@@ -42,8 +48,26 @@ fun PantryPilotNavHost(
         composable(Screen.Splash.route) {
             SplashScreen(
                 onSplashFinished = {
-                    navController.navigate(Screen.Home.route) {
+                    val destination = if (onboardingPreferences.hasCompletedOnboarding()) {
+                        Screen.Home.route
+                    } else {
+                        Screen.Welcome.route
+                    }
+                    navController.navigate(destination) {
                         popUpTo(Screen.Splash.route) {
+                            inclusive = true
+                        }
+                    }
+                }
+            )
+        }
+
+        composable(Screen.Welcome.route) {
+            WelcomeScreen(
+                onGetStarted = {
+                    onboardingPreferences.setOnboardingCompleted()
+                    navController.navigate(Screen.Home.route) {
+                        popUpTo(Screen.Welcome.route) {
                             inclusive = true
                         }
                     }

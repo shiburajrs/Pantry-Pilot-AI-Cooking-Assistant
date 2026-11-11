@@ -110,4 +110,18 @@
     <string name="no_saved_recipes_title">No Saved Recipes Yet</string>
     <string name="no_saved_recipes_desc">Your favorite recipes will appear here. Scan ingredients to discover dishes you\'ll love!</string>
     <string name="action_scan_now">Scan Ingredients Now</string>
+
+    <string name="welcome_badge">WELCOME TO PANTRYPILOT</string>
+    <string name="welcome_title">Cook Smarter with what you have</string>
+    <string name="welcome_subtitle">Turn everyday ingredients into chef-quality meals in seconds with Gemini AI.</string>
+    <string name="welcome_feature_1_title">Snap or Pick Ingredients</string>
+    <string name="welcome_feature_1_desc">Take a photo of your fridge or pantry to automatically detect what you have.</string>
+    <string name="welcome_feature_2_title">AI Recipe Matching</string>
+    <string name="welcome_feature_2_desc">Receive instant recipe recommendations tailored exactly to your ingredients.</string>
+    <string name="welcome_feature_3_title">Cook &amp; Save Offline</string>
+    <string name="welcome_feature_3_desc">Follow step-by-step cooking guides and keep your favorite dishes saved locally.</string>
+    <string name="action_get_started">Get Started</string>
+    <string name="action_next">Next</string>
+    <string name="action_skip">Skip</string>
+    <string name="welcome_page_counter">%1$d / %2$d</string>
 </resources>
